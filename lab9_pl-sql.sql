@@ -1,11 +1,11 @@
---UzupeÅ‚nij ciaÅ‚o pakietu z poprzedniego slajdu za pomocÄ… definicji funkcji
---calculate_seniority_bonus oraz procedury add_candidate, ktÃ³re pojawiÅ‚y siÄ™ na
---poprzednich zajÄ™ciach. NastÄ™pnie wywoÅ‚aj te podprogramy z wykorzystaniem
+--Uzupe³nij cia³o pakietu z poprzedniego slajdu za pomoc¹ definicji funkcji
+--calculate_seniority_bonus oraz procedury add_candidate, które pojawi³y siê na
+--poprzednich zajêciach. Nastêpnie wywo³aj te podprogramy z wykorzystaniem
 --nazwy pakietu.
 
---Dodaj do pakietu prywatnÄ… funkcjÄ™ create_base_login, ktÃ³ra bÄ™dzie
---generowaÅ‚a bazowy login pracownika (Ä‡wiczenie z pracy domowej BD1_8).
---SprawdÅº moÅ¼liwoÅ›Ä‡ wywoÅ‚ania tej funkcji.
+--Dodaj do pakietu prywatn¹ funkcjê create_base_login, która bêdzie
+--generowa³a bazowy login pracownika (æwiczenie z pracy domowej BD1_8).
+--SprawdŸ mo¿liwoœæ wywo³ania tej funkcji.
 
 CREATE OR REPLACE PACKAGE emp_management
 AS
@@ -64,14 +64,14 @@ BEGIN
         VALUES (NULL, p_name, p_surname, p_birth_date, p_gender, c_candidate_status, NULL, NULL, v_dep_id, v_pos_id, NULL, NULL);
         dbms_output.put_line ('Dodano kandydata '|| p_name|| ' '|| p_surname);
     ELSE
-        dbms_output.put_line ('Za duzo kandydatÃ³w w departamencie: '|| p_dep_name);
+        dbms_output.put_line ('Za duzo kandydatów w departamencie: '|| p_dep_name);
     END IF;
     EXCEPTION
         WHEN no_data_found THEN
-        dbms_output.put_line ('Niepoprawna nazwa stanowiska i/lub zakÅ‚adu');
+        dbms_output.put_line ('Niepoprawna nazwa stanowiska i/lub zak³adu');
         RAISE;
         WHEN too_many_rows THEN
-        dbms_output.put_line ('Nieunikalna nazwa stanowiska i/lub zakÅ‚adu');
+        dbms_output.put_line ('Nieunikalna nazwa stanowiska i/lub zak³adu');
         RAISE;
 END add_candidate;
 function create_login(emp_id number)
@@ -98,11 +98,11 @@ select emp_management.calculate_seniority_bonus(101) from dual;
 /
 
 select emp_management.create_login(101) from dual;
--- Nie moÅ¼na wywoÅ‚aÄ‡ 
+-- Nie mo¿na wywo³aæ 
 /
 
---StwÃ³rz wyzwalacz, ktÃ³ry podczas uaktualniania zarobkÃ³w pracownika wyÅ›wietli
---podatek 20% procent od nowych zarobkÃ³w. Przetestuj dziaÅ‚anie.
+--Stwórz wyzwalacz, który podczas uaktualniania zarobków pracownika wyœwietli
+--podatek 20% procent od nowych zarobków. Przetestuj dzia³anie.
 
 create or replace trigger tg_tax
 after update of salary on employees
@@ -115,9 +115,9 @@ end tg_tax;
 update employees set salary = 6000 where employee_id = 101;
 /
 
---StwÃ³rz wyzwalacz, ktÃ³ry po dodaniu nowego pracownika, usuniÄ™ciu pracownika lub
---modyfikacji zarobkÃ³w pracownikÃ³w wyÅ›wietli aktualne Å›rednie zarobki wszystkich
---pracownikÃ³w. Przetestuj dziaÅ‚anie.
+--Stwórz wyzwalacz, który po dodaniu nowego pracownika, usuniêciu pracownika lub
+--modyfikacji zarobków pracowników wyœwietli aktualne œrednie zarobki wszystkich
+--pracowników. Przetestuj dzia³anie.
 create or replace trigger tg_avg_sal
 after insert or delete or update of salary on employees
 declare
@@ -134,10 +134,10 @@ update employees set salary = 5500 where employee_id = 101;
 
 /
 
---StwÃ³rz wyzwalacz, ktÃ³ry dla kaÅ¼dego nowego pracownika nieposiadajÄ…cego managera,
+--Stwórz wyzwalacz, który dla ka¿dego nowego pracownika nieposiadaj¹cego managera,
 --ale zatrudnionego w departamencie, przypisze temu pracownikowi managera
---bÄ™dÄ…cego jednoczeÅ›nie managerem departamentu, w ktÃ³rym ten pracownik pracuje.
---Wykorzystaj klauzulÄ™ WHEN wyzwalacza. Przetestuj dziaÅ‚anie.
+--bêd¹cego jednoczeœnie managerem departamentu, w którym ten pracownik pracuje.
+--Wykorzystaj klauzulê WHEN wyzwalacza. Przetestuj dzia³anie.
 
 create or replace trigger tg_man
 before insert on employees
@@ -160,8 +160,8 @@ end tg_man;
 insert into employees values (160, 'Adam', 'Abacki', '01/01/01', 'M', NULL, 5000, NULL, 101, NULL, NULL, NULL);
 /
 
---RozwiÄ…Å¼ ponownie Ä‡wiczenie nr 4, ale tym razem nie wykorzystuj klauzuli WHEN
---wyzwalacza. Przetestuj dziaÅ‚anie.
+--Rozwi¹¿ ponownie æwiczenie nr 4, ale tym razem nie wykorzystuj klauzuli WHEN
+--wyzwalacza. Przetestuj dzia³anie.
 
 create or replace trigger tg_man
 before insert on employees
@@ -182,14 +182,14 @@ end tg_man;
 insert into employees values (160, 'Adam', 'Abacki', '01/01/01', 'M', NULL, 5000, NULL, 101, NULL, NULL, NULL);
 /
 
---StwÃ³rz wyzwalacz ktÃ³ry bÄ™dzie weryfikowaÅ‚, Å¼e w firmie pracuje tylko jeden Prezes.
+--Stwórz wyzwalacz który bêdzie weryfikowa³, ¿e w firmie pracuje tylko jeden Prezes.
 
--- skÄ…d wiadomo kto jest prezesem?
+-- sk¹d wiadomo kto jest prezesem?
 
---Przygotuj procedurÄ™ PL/SQL, ktÃ³ra z wykorzystaniem jawnego kursora
---udostÄ™pni Å›rednie zarobki dla kaÅ¼dego z departamentÃ³w. NastÄ™pnie
---wykorzystujÄ…c ten kursor wyÅ›wietl imiona, nazwiska i zarobki pracownikÃ³w,
---ktÃ³rzy zarabiajÄ… wiÄ™cej niÅ¼ Å›rednie zarobki w ich departamentach.
+--Przygotuj procedurê PL/SQL, która z wykorzystaniem jawnego kursora
+--udostêpni œrednie zarobki dla ka¿dego z departamentów. Nastêpnie
+--wykorzystuj¹c ten kursor wyœwietl imiona, nazwiska i zarobki pracowników,
+--którzy zarabiaj¹ wiêcej ni¿ œrednie zarobki w ich departamentach.
 
 
 declare

@@ -3,42 +3,42 @@ ALTER SESSION SET nls_date_format = "DD/MM/YYYY";
 SELECT SYSDATE
 FROM DUAL;
 
---PokaÅ¼ wszystkie kombinacje pracownikÃ³w (employees) oraz uzyskanych
---ocen z oceny rocznej (grades). PokaÅ¼ identyfikator pracownika oraz ocenÄ™
---liczbowÄ… i jej opis.
---Zmodyfikuj poprzednie zapytanie tak aby pokazaÄ‡ tylko pracownikÃ³w z
---departamentÃ³w 101, 102, 103 lub bez departamentu.
+--Poka¿ wszystkie kombinacje pracowników (employees) oraz uzyskanych
+--ocen z oceny rocznej (grades). Poka¿ identyfikator pracownika oraz ocenê
+--liczbow¹ i jej opis.
+--Zmodyfikuj poprzednie zapytanie tak aby pokazaæ tylko pracowników z
+--departamentów 101, 102, 103 lub bez departamentu.
 
 select e.employee_id, g.grade, g.description
 from employees e cross join grades g
 where e.department_id in (101, 102, 103) or e.department_id is null;
 
---ZnajdÅº pracownikÃ³w, ktÃ³rych zarobki nie sÄ… zgodne z â€œwideÅ‚kamiâ€ na jego
---stanowisku. ZwrÃ³Ä‡ imiÄ™, nazwisko, wynagrodzenie oraz nazwÄ™ stanowiska
+--ZnajdŸ pracowników, których zarobki nie s¹ zgodne z “wide³kami” na jego
+--stanowisku. Zwróæ imiê, nazwisko, wynagrodzenie oraz nazwê stanowiska
 
---Zmodyfikuj poprzednie zapytanie tak, aby dodatkowo wyÅ›wietliÄ‡ informacje
---o nazwie zakÅ‚adu pracownika.
+--Zmodyfikuj poprzednie zapytanie tak, aby dodatkowo wyœwietliæ informacje
+--o nazwie zak³adu pracownika.
 
 select e.name, e.surname, e.salary, d.name, p.name
 from employees e join positions p  using (position_id) join departments d using(department_id)
 where e.salary not between p.min_salary and p.max_salary;
 
---WyÅ›wietl nazwÄ™ zakÅ‚adu wraz z imieniem i nazwiskiem jego kierownikÃ³w.
---PokaÅ¼ tylko zakÅ‚ady, ktÃ³re majÄ… budÅ¼et pomiÄ™dzy 5000000 i 10000000.
+--Wyœwietl nazwê zak³adu wraz z imieniem i nazwiskiem jego kierowników.
+--Poka¿ tylko zak³ady, które maj¹ bud¿et pomiêdzy 5000000 i 10000000.
 
 select d.name, e.name, e.surname
 from departments d join employees e on (d.manager_id = e.employee_id)
 where d.year_budget between 5000000 and 10000000;
 
---ZnajdÅº zakÅ‚ady (podaj ich nazwÄ™), ktÃ³re majÄ… swoje siedziby w Polsce.
+--ZnajdŸ zak³ady (podaj ich nazwê), które maj¹ swoje siedziby w Polsce.
 select d.name
 from departments d
 join addresses a using (address_id)
 join countries c using (country_id)
 where c.name like 'Polska';
 
--- Zmodyfikuj zapytanie 3 tak, aby uwzglÄ™dniaÄ‡ w wynikach tylko zakÅ‚ady,
---ktÃ³re majÄ… siedziby w Polsce.
+-- Zmodyfikuj zapytanie 3 tak, aby uwzglêdniaæ w wynikach tylko zak³ady,
+--które maj¹ siedziby w Polsce.
 select d.name, e.name, e.surname
 from departments d 
 join employees e on (d.manager_id = e.employee_id)
@@ -47,8 +47,8 @@ join countries c using (country_id)
 where d.year_budget between 5000000 and 10000000
 and c.name like 'Polska';
 
--- PokaÅ¼ oceny (grades) pracownikÃ³w ktÃ³rzy nie posiadajÄ… kierownika. W
---wynikach pokaÅ¼ imie , nazwisko pracownika, ocene liczbowa i jej opis.
+-- Poka¿ oceny (grades) pracowników którzy nie posiadaj¹ kierownika. W
+--wynikach poka¿ imie , nazwisko pracownika, ocene liczbowa i jej opis.
 
 select e.name, e.surname, g.grade, g.description
 from employees e
@@ -56,12 +56,12 @@ join emp_grades using (employee_id)
 join grades g using (grade_id)
 where e.manager_id is NULL;
 
---PokaÅ¼ nazwÄ™ kraju i nazwÄ™ regionu do ktÃ³rego zostaÅ‚ przypisany.
+--Poka¿ nazwê kraju i nazwê regionu do którego zosta³ przypisany.
 select * from reg_countries rc natural join regions r join countries c on (c.country_id = rc.country_id);
 
---WyÅ›wietl listÄ™ zawierajÄ…cÄ… nazwisko pracownika, stanowisko, na ktÃ³rym
---pracuje, aktualne zarobki oraz wideÅ‚ki pÅ‚acowe dla tego stanowiska.
---SterujÄ…c rodzajem zÅ‚Ä…czenia, zagwarantuj, Å¼e w wynikach znajdÄ… siÄ™
+--Wyœwietl listê zawieraj¹c¹ nazwisko pracownika, stanowisko, na którym
+--pracuje, aktualne zarobki oraz wide³ki p³acowe dla tego stanowiska.
+--Steruj¹c rodzajem z³¹czenia, zagwarantuj, ¿e w wynikach znajd¹ siê
 --wszyscy pracownicy
 
 select e.surname, p.name, e.salary, p.max_salary, p.min_salary
@@ -69,14 +69,14 @@ from employees e
 left join positions p using (position_id);
 
 
---WyÅ›wietl Å›redniÄ… pensjÄ™ oraz liczbÄ™ osÃ³b zatrudnionych dla stanowisk.
---SterujÄ…c rodzajem zÅ‚Ä…czenia zagwarantuj, Å¼e znajdÄ… siÄ™ tam rÃ³wnieÅ¼
---stanowiska, na ktÃ³rych nikt nie jest zatrudniony
+--Wyœwietl œredni¹ pensjê oraz liczbê osób zatrudnionych dla stanowisk.
+--Steruj¹c rodzajem z³¹czenia zagwarantuj, ¿e znajd¹ siê tam równie¿
+--stanowiska, na których nikt nie jest zatrudniony
 
 select avg(e.salary), count(e.employee_id) from positions p left outer join employees e on (e.position_id = p.position_id) group by p.position_id;
 
---PokaÅ¼ liczbÄ™ pracownikÃ³w zatrudnionych kiedykolwiek w kaÅ¼dym projekcie.
---Zadbaj by w wynikach pojawiÅ‚ siÄ™ kaÅ¼dy projekt.
+--Poka¿ liczbê pracowników zatrudnionych kiedykolwiek w ka¿dym projekcie.
+--Zadbaj by w wynikach pojawi³ siê ka¿dy projekt.
 
 select count(employee_id), p.name
 from employees e
@@ -84,7 +84,7 @@ join emp_projects using (employee_id)
 right join projects p using (project_id)
 group by project_id, p.name;
 
--- PokaÅ¼ Å›redniÄ… ocenÄ™ pracownikÃ³w per departament. W wynikach zamiesc
+-- Poka¿ œredni¹ ocenê pracowników per departament. W wynikach zamiesc
 --nazwe departamentu i srednia ocene.
 
 select avg(g.grade), d.name
@@ -94,8 +94,8 @@ join employees e using (employee_id)
 right join departments d using (department_id)
 group by department_id, d.name;
 
---Dla kaÅ¼dego imienia pracownika z zakÅ‚adÃ³w Administracja lub Marketing zwrÃ³Ä‡
---liczbÄ™ pracownikÃ³w, ktÃ³rzy majÄ… takie samo imiÄ™ i podaj ich Å›rednie zarobki
+--Dla ka¿dego imienia pracownika z zak³adów Administracja lub Marketing zwróæ
+--liczbê pracowników, którzy maj¹ takie samo imiê i podaj ich œrednie zarobki
 
 select e.name, count(e.name), avg(e.salary)
 from employees e
@@ -103,8 +103,8 @@ join departments d using (department_id)
 where d.name in ('Administracja', 'Marketing')
 group by e.name;
 
---ZwrÃ³Ä‡ imiona i nazwiska pracownikÃ³w, ktÃ³rzy przeszli wiÄ™cej niÅ¼ 2 zmiany
---stanowiska. Wyniki posortuj malejÄ…co wg liczby zmian.
+--Zwróæ imiona i nazwiska pracowników, którzy przeszli wiêcej ni¿ 2 zmiany
+--stanowiska. Wyniki posortuj malej¹co wg liczby zmian.
 
 select e.name, e.surname, count(*) changes
 from employees e
@@ -113,8 +113,8 @@ group by (employee_id, e.name, e.surname)
 having count(*) > 2
 order by changes desc;
 
---ZwrÃ³Ä‡ id, nazwisko kierownikÃ³w oraz liczbÄ™ podlegÅ‚ych pracownikÃ³w. Wyniki
---posortuj malejÄ…co wg liczby podlegÅ‚ych pracownikÃ³w. 
+--Zwróæ id, nazwisko kierowników oraz liczbê podleg³ych pracowników. Wyniki
+--posortuj malej¹co wg liczby podleg³ych pracowników. 
 
 select m.employee_id, m.name, m.surname, count(*)
 from employees e
@@ -123,8 +123,8 @@ group by (m.employee_id, m.name, m.surname)
 order by count(*) desc;
 
 
--- Napisz zapytanie zwracajÄ…ce liczbÄ™ zakÅ‚adÃ³w w krajach. W wynikach podaj
---nazwÄ™ kraju oraz jego ludnoÅ›Ä‡.
+-- Napisz zapytanie zwracaj¹ce liczbê zak³adów w krajach. W wynikach podaj
+--nazwê kraju oraz jego ludnoœæ.
 
 select c.name, c.population, count(*)
 from departments d
@@ -133,8 +133,8 @@ right join countries c using (country_id)
 group by country_id, c.name, c.population;
 
 
---. Napisz zapytanie zwracajÄ…ce liczbÄ™ zakÅ‚adÃ³w w regionach. W wynikach podaj
---nazwÄ™ regionu. Wynik posortuj malejÄ…co wzglÄ™dem liczby zakÅ‚adÃ³w.
+--. Napisz zapytanie zwracaj¹ce liczbê zak³adów w regionach. W wynikach podaj
+--nazwê regionu. Wynik posortuj malej¹co wzglêdem liczby zak³adów.
 
 select r.region_id, count(d.department_id) from regions r 
 left outer join reg_countries rc on (r.region_id = rc.region_id)
@@ -145,60 +145,60 @@ group by r.region_id order by count(d.department_id) desc;
 
 -- PRACA DOMOWA
 
--- Napisz zapytanie znajdujÄ…ce liczbÄ™ zmian stanowisk pracownika Jan Kowalski.
+-- Napisz zapytanie znajduj¹ce liczbê zmian stanowisk pracownika Jan Kowalski.
 
 select count(*) changes
 from employees e
 join positions_history using (employee_id)
 where e.name like 'Jan' and e.surname like 'Kowalski';
 
---Napisz zapytanie znajdujÄ…ce Å›redniÄ… pensjÄ™ dla kaÅ¼dego ze stanowisk. Wynik
---powinien zawieraÄ‡ nazwÄ™ stanowiska i zaokrÄ…glonÄ… Å›redniÄ… pensjÄ™.
+--Napisz zapytanie znajduj¹ce œredni¹ pensjê dla ka¿dego ze stanowisk. Wynik
+--powinien zawieraæ nazwê stanowiska i zaokr¹glon¹ œredni¹ pensjê.
 
 select p.name, ROUND(avg(salary))
 from positions p
 join employees e using (position_id)
 group by p.name, position_id;
 
--- Pobierz wszystkich pracownikÃ³w zakÅ‚adu Kadry lub Finanse wraz z informacjÄ… w
---jakim zakÅ‚adzie pracujÄ…
+-- Pobierz wszystkich pracowników zak³adu Kadry lub Finanse wraz z informacj¹ w
+--jakim zak³adzie pracuj¹
 
 select e.name, e.surname, d.name
 from employees e
 join departments d using (department_id)
 where d.name in ('Kadry', 'Finanse');
 
---ZnajdÅº pracownikÃ³w, ktÃ³rych zarobki nie sÄ… zgodne z â€œwideÅ‚kamiâ€ na jego
---stanowisku. ZwrÃ³Ä‡ imiÄ™, nazwisko, wynagrodzenie oraz nazwÄ™ stanowiska.
---Zrealizuj za pomocÄ… zÅ‚Ä…czenia nierÃ³wnoÅ›ciowego.
+--ZnajdŸ pracowników, których zarobki nie s¹ zgodne z “wide³kami” na jego
+--stanowisku. Zwróæ imiê, nazwisko, wynagrodzenie oraz nazwê stanowiska.
+--Zrealizuj za pomoc¹ z³¹czenia nierównoœciowego.
 
 select e.name, e.surname, e.salary, p.name
 from employees e 
 left join positions p using (position_id)
 where e.salary not between p.min_salary and p.max_salary;
 
---PokaÅ¼ nazwy regionÃ³w w ktÃ³rych nie ma Å¼adnego kraju.
+--Poka¿ nazwy regionów w których nie ma ¿adnego kraju.
 
 select r.name
 from regions r 
 left join reg_countries rc using (region_id)
 where rc.country_id is null;
 
--- Wykonaj zÅ‚Ä…czenie naturalne miÄ™dzy tabelami countries a regions. Jaki wynik
+-- Wykonaj z³¹czenie naturalne miêdzy tabelami countries a regions. Jaki wynik
 --otrzymujemy i dlaczego?
 select *
 from countries natural join regions;
 
--- Otrzymujemy pustÄ… tabelÄ™, poniewaÅ¼ Å‚Ä…czymy tabele po wspÃ³lnej nazwie - name
+-- Otrzymujemy pust¹ tabelê, poniewa¿ ³¹czymy tabele po wspólnej nazwie - name
 -- nie ma regionu o takiej samej nazwie jak kraj
 
---Jaki otrzymamy wynik jeÅ›li zrobimy NATURAL JOIN na tabelach bez wspÃ³lnej
---kolumny? SprawdÅº i zastanÃ³w siÄ™ nad przyczynÄ…
+--Jaki otrzymamy wynik jeœli zrobimy NATURAL JOIN na tabelach bez wspólnej
+--kolumny? SprawdŸ i zastanów siê nad przyczyn¹
 
 select *
 from positions natural join grades;
 
--- wykonaÅ‚ siÄ™ cross join, poniewaÅ¼ nie ma wspÃ³lnej kolumny
+-- wykona³ siê cross join, poniewa¿ nie ma wspólnej kolumny
 
 
 

@@ -1,37 +1,37 @@
---Napisz prosty blok anonimowy zawierajÄ…cy blok wykonawczy z instrukcjÄ…
+--Napisz prosty blok anonimowy zawieraj¹cy blok wykonawczy z instrukcj¹
 --NULL. Uruchom ten program.
 BEGIN
 NULL;
 END;
 /
 
---Zmodyfikuj program powyÅ¼ej i wykorzystaj procedurÄ™ dbms_output.put_line
---przyjmujÄ…cÄ… jako parametr Å‚aÅ„cuch znakowy do wyÅ›wietlenia na konsoli.
---Uruchom program i odnajdÅº napis.
+--Zmodyfikuj program powy¿ej i wykorzystaj procedurê dbms_output.put_line
+--przyjmuj¹c¹ jako parametr ³añcuch znakowy do wyœwietlenia na konsoli.
+--Uruchom program i odnajdŸ napis.
 BEGIN
 dbms_output.put_line('test');
 END;
 /
 
---Napisz blok anonimowy ktÃ³ry doda do tabeli region nowy rekord (np.
---â€˜Oceaniaâ€™). Uruchom program i zweryfikuj dziaÅ‚anie.
+--Napisz blok anonimowy który doda do tabeli region nowy rekord (np.
+--‘Oceania’). Uruchom program i zweryfikuj dzia³anie.
 BEGIN
 INSERT INTO regions VALUES (303, 'Oceania', 'OCN');
 END;
 /
 
---Napisz blok anonimowy, ktÃ³ry wygeneruje bÅ‚Ä…d
---(RAISE_APPLICATION_ERROR przyjmujÄ…cÄ… 2 parametry: kod bÅ‚Ä™du oraz
---wiadomoÅ›Ä‡)
+--Napisz blok anonimowy, który wygeneruje b³¹d
+--(RAISE_APPLICATION_ERROR przyjmuj¹c¹ 2 parametry: kod b³êdu oraz
+--wiadomoœæ)
 
 BEGIN
 RAISE_APPLICATION_ERROR(-20001, 'Error');
 END;
 /
 
---Napisz blok anonimowy ktÃ³ry bÄ™dzie korzystaÅ‚ z dwÃ³ch zmiennych (v_min_sal
---oraz v_emp_id) i ktÃ³ry bÄ™dzie wypisywaÅ‚ na ekran imiÄ™ i nazwisko pracownika
---o wskazanym id tylko jeÅ›li jego zarobki sÄ… wyÅ¼sze niÅ¼ v_min_sal.
+--Napisz blok anonimowy który bêdzie korzysta³ z dwóch zmiennych (v_min_sal
+--oraz v_emp_id) i który bêdzie wypisywa³ na ekran imiê i nazwisko pracownika
+--o wskazanym id tylko jeœli jego zarobki s¹ wy¿sze ni¿ v_min_sal.
 DECLARE
     v_min_sal NUMBER := 15000;
     v_emp_id NUMBER := 101;
@@ -51,8 +51,8 @@ BEGIN
 END;
 /
 
---Napisz funkcjÄ™, ktÃ³ra wyliczy rocznÄ… wartoÅ›Ä‡ podatku pracownika. ZakÅ‚adamy
---podatek progresywny. PoczÄ…tkowo stawka to 15%, po przekroczeniu progu
+--Napisz funkcjê, która wyliczy roczn¹ wartoœæ podatku pracownika. Zak³adamy
+--podatek progresywny. Pocz¹tkowo stawka to 15%, po przekroczeniu progu
 --100000 stawka wynosi 25%.
 
 create or replace function calculate_tax(emp_id NUMBER)
@@ -77,8 +77,8 @@ end;
 select calculate_tax(101) from dual;
 /
 
---StwÃ³rz widok Å‚Ä…czÄ…cy departamenty, adresy i kraje. Napisz zapytanie, ktÃ³re
---pokaÅ¼e sumÄ™ zapÅ‚aconych podatkÃ³w w krajach.
+--Stwórz widok ³¹cz¹cy departamenty, adresy i kraje. Napisz zapytanie, które
+--poka¿e sumê zap³aconych podatków w krajach.
 select c.name, sum(calculate_tax(e.employee_id))
 from employees e
 join departments d on (e.department_id = d.department_id)
@@ -87,9 +87,9 @@ join countries c on (a.country_id = c.country_id)
 group by c.country_id, c.name;
 /
 
---Napisz funkcjÄ™, ktÃ³ra wyliczy dodatek funkcyjny dla kierownikÃ³w zespoÅ‚Ã³w.
---Dodatek funkcyjny powinien wynosiÄ‡ 10% pensji za kaÅ¼dego podlegÅ‚ego
---pracownika, ale nie moÅ¼e przekraczaÄ‡ 50% miesiÄ™cznej pensji.
+--Napisz funkcjê, która wyliczy dodatek funkcyjny dla kierowników zespo³ów.
+--Dodatek funkcyjny powinien wynosiæ 10% pensji za ka¿dego podleg³ego
+--pracownika, ale nie mo¿e przekraczaæ 50% miesiêcznej pensji.
 create or replace function calculate_function_bonus(man_id NUMBER)
 return number
 as
@@ -115,8 +115,8 @@ end;
 select calculate_function_bonus(103) from dual;
 /
 
---Zmodyfikuj funkcjÄ™ calculate_total_bonus, Å¼eby wyliczaÅ‚a caÅ‚oÅ›Ä‡ dodatku
---dla pracownika (staÅ¼owy i funkcyjny).
+--Zmodyfikuj funkcjê calculate_total_bonus, ¿eby wylicza³a ca³oœæ dodatku
+--dla pracownika (sta¿owy i funkcyjny).
 CREATE OR replace FUNCTION calculate_seniority_bonus(p_id NUMBER)
 RETURN NUMBER
 AS
@@ -155,8 +155,8 @@ BEGIN
 END;
 /
 
---Napisz procedurÄ™, ktÃ³ra wykona zmianÄ™ stanowiska pracownika. Procedura
---powinna przyjmowaÄ‡ identyfikator pracownika oraz identyfikator jego nowego
+--Napisz procedurê, która wykona zmianê stanowiska pracownika. Procedura
+--powinna przyjmowaæ identyfikator pracownika oraz identyfikator jego nowego
 --stanowiska.
 
 create or replace procedure change_position(emp_id NUMBER, pos_id NUMBER)
@@ -169,9 +169,9 @@ begin
     change_position(101, 101);
 end;
 /
---Napisz procedurÄ™, ktÃ³ra zdegraduje zespoÅ‚owego kierownika o danym
---identyfikatorze. Na nowego kierownika zespoÅ‚u powoÅ‚aj najstarszego z jego
---dotychczasowych podwÅ‚adnych.
+--Napisz procedurê, która zdegraduje zespo³owego kierownika o danym
+--identyfikatorze. Na nowego kierownika zespo³u powo³aj najstarszego z jego
+--dotychczasowych podw³adnych.
 
 create or replace procedure degrade_manager(man_id number)
 as
@@ -200,8 +200,8 @@ end;
 rollback;
 /
 
---Napisz funkcjÄ™, ktÃ³ra bÄ™dzie tworzyÅ‚a bazowy login dla kaÅ¼dego pracownika.
---Login ma siÄ™ skÅ‚adaÄ‡ z pierwszej litery imienia i maksymalnie 7 znakÃ³w z
+--Napisz funkcjê, która bêdzie tworzy³a bazowy login dla ka¿dego pracownika.
+--Login ma siê sk³adaæ z pierwszej litery imienia i maksymalnie 7 znaków z
 --nazwiska.
 
 create or replace function create_login(emp_id number)
@@ -224,9 +224,9 @@ end;
 select create_login(101) from dual;
 /
 
---Napisz procedurÄ™, ktÃ³ra bÄ™dzie zapisywaÄ‡ login pracownika do nowej
---kolumny w tabeli employees (dodaj jÄ…). Zadbaj o to, Å¼eby zapisywany login
---byÅ‚ unikalny (np. poprzez dodanie numerÃ³w do bazowego loginu).
+--Napisz procedurê, która bêdzie zapisywaæ login pracownika do nowej
+--kolumny w tabeli employees (dodaj j¹). Zadbaj o to, ¿eby zapisywany login
+--by³ unikalny (np. poprzez dodanie numerów do bazowego loginu).
 /
 alter table employees add login VARCHAR(15);
 /

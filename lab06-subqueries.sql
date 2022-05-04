@@ -3,11 +3,11 @@ ALTER SESSION SET nls_date_format = "DD/MM/YYYY";
 SELECT SYSDATE
 FROM DUAL;
 
---Ä†w 1
+--Æw 1
 
---Napisz zapytanie, ktÃ³re wyÅ›wietli imiÄ™, nazwisko oraz nazwy zakÅ‚adÃ³w, w ktÃ³rych
---pracownicy majÄ… wiÄ™ksze zarobki niÅ¼ minimalne zarobki na stanowisku o nazwie
---â€?Konsultantâ€™.
+--Napisz zapytanie, które wyœwietli imiê, nazwisko oraz nazwy zak³adów, w których
+--pracownicy maj¹ wiêksze zarobki ni¿ minimalne zarobki na stanowisku o nazwie
+--˜?Konsultant’.
 
 select e.employee_id, e.name, e.surname, e.salary, department_id, d.name dep_name
 from employees e join departments d using (department_id)
@@ -15,7 +15,7 @@ where salary > (select min(e.salary)
 from employees e join positions p using (position_id)
 where p.name like 'Konsultant');
 
--- Napisz zapytanie, które zwróci dane najm³odszego wœród dzieci pracowników. 
+-- Napisz zapytanie, kt˜re zwr˜ci dane najm˜odszego w˜r˜d dzieci pracownik˜w. 
 
 select d.name, d.surname
 from dependents d
@@ -27,8 +27,8 @@ order by birth_date desc
 fetch next 1 rows only;
 
 
---WyÅ›wietl Å›rednie zarobki dla kaÅ¼dego ze stanowisk, o ile Å›rednie te sÄ… wiÄ™ksze od
---Å›rednich zarobkÃ³w w departamencie â€œAdministracjaâ€.
+--Wyœwietl œrednie zarobki dla ka¿dego ze stanowisk, o ile œrednie te s¹ wiêksze od
+--œrednich zarobków w departamencie “Administracja”.
 
 select position_id, p.name, round(avg(e.salary))
 from employees e join positions p using (position_id)
@@ -37,9 +37,9 @@ group by position_id, p.name
 having round(avg(e.salary)) > (select round(avg(e.salary)) from employees e join departments d using (department_id) where d.name like 'Administracja');
 
 
---Napisz zapytanie, które wyœwietli wszystkich pracowników, którzy zostali zatrudnieni 
---nie wczeœniej ni¿ najwczeœniej zatrudniony pracownik w zak³adzie o id 101 i nie póŸniej 
---ni¿ najpóŸniej zatrudniony pracownik w zak³adzie o id 107.
+--Napisz zapytanie, kt˜re wy˜wietli wszystkich pracownik˜w, kt˜rzy zostali zatrudnieni 
+--nie wcze˜niej ni˜ najwcze˜niej zatrudniony pracownik w zak˜adzie o id 101 i nie p˜niej 
+--ni˜ najp˜niej zatrudniony pracownik w zak˜adzie o id 107.
 select *
 from employees e
 where date_employed >= (select min(date_employed)
@@ -49,7 +49,7 @@ from employees
 where department_id = 107);
 
 
---Napisz zapytanie, ktÃ³re zwrÃ³ci dane dzieci najstarszego pracownika z zakÅ‚adu 102.
+--Napisz zapytanie, które zwróci dane dzieci najstarszego pracownika z zak³adu 102.
 
 select d.name, d.surname
 from employees e join dependents d on (e.employee_id = d.employee_id)
@@ -60,11 +60,11 @@ select MIN(birth_date)
 from employees
 where department_id = '102';
 
---Ä†w 2
+--Æw 2
 
---Napisz zapytanie, ktÃ³re zwrÃ³ci informacje o pracownikach zatrudnionych po
---zakoÅ„czeniu wszystkich projektÃ³w (tabela projects). Zapytanie zrealizuj na 2 sposoby i
---porÃ³wnaj wyniki
+--Napisz zapytanie, które zwróci informacje o pracownikach zatrudnionych po
+--zakoñczeniu wszystkich projektów (tabela projects). Zapytanie zrealizuj na 2 sposoby i
+--porównaj wyniki
 
 select *
 from employees
@@ -74,8 +74,8 @@ select *
 from employees
 where date_employed > ALL (select distinct date_end from projects where date_end is not null);
 
---KorzystajÄ…c z podzapytaÅ„ napisz zapytanie ktÃ³re zwrÃ³ci pracownikÃ³w departamentÃ³w
---majÄ…cych siedziby w Polsce.
+--Korzystaj¹c z podzapytañ napisz zapytanie które zwróci pracowników departamentów
+--maj¹cych siedziby w Polsce.
 
 select *
 from employees
@@ -91,7 +91,7 @@ join addresses a using (address_id)
 join countries c using (country_id)
 where c.name like 'Polska';
 
---Zmodyfikuj poprzednie zapytania tak, Å¼eby dodatkowo pokazaÄ‡ maksymalnÄ… pensjÄ™
+--Zmodyfikuj poprzednie zapytania tak, ¿eby dodatkowo pokazaæ maksymaln¹ pensjê
 --per departament.
 
 select max(salary), department_id
@@ -103,17 +103,17 @@ join countries c using (country_id)
 where c.name like 'Polska')
 group by department_id;
 
---Napisz zapytanie, które wyœwietli wszystkich pracowników, których zarobki s¹ co 
---najmniej czterokrotnie wiêksze od zarobków jakiegokolwiek innego pracownika.
+--Napisz zapytanie, kt˜re wy˜wietli wszystkich pracownik˜w, kt˜rych zarobki s˜ co 
+--najmniej czterokrotnie wi˜ksze od zarobk˜w jakiegokolwiek innego pracownika.
 
 select *
 from employees
 where salary >= ANY (select 4*salary from employees); 
 
 
--- Ä†w 3
+-- Æw 3
 
---Napisz zapytanie, ktÃ³re zwrÃ³ci pracownikÃ³w zarabiajÄ…cych wiÄ™cej niÅ¼ Å›rednia w ich
+--Napisz zapytanie, które zwróci pracowników zarabiaj¹cych wiêcej ni¿ œrednia w ich
 --departamencie.
 
 select *
@@ -123,70 +123,70 @@ where salary > (
     from employees e2 
     where (e1.department_id = e2.department_id));
 
---Za pomocÄ… podzapytania skorelowanego sprawdÅº, czy wszystkie stanowiska
---zdefiniowane w tabeli Positions sÄ… aktualnie zajÄ™te przez pracownikÃ³w.
+--Za pomoc¹ podzapytania skorelowanego sprawdŸ, czy wszystkie stanowiska
+--zdefiniowane w tabeli Positions s¹ aktualnie zajête przez pracowników.
 
 select count(*)
 from positions p
 where NOT EXISTS (select * from employees e where (e.position_id = p.position_id));
 
--- Napisz zapytanie które zwróci regiony nieprzypisane do krajów
+-- Napisz zapytanie kt˜re zwr˜ci regiony nieprzypisane do kraj˜w
 select *
 from regions r
 where NOT EXISTS (select * from reg_countries rc where rc.region_id = r.region_id);
 
--- Napisz zapytanie które zwróci kraje nieprzypisane do regionów
+-- Napisz zapytanie kt˜re zwr˜ci kraje nieprzypisane do region˜w
 select *
 from countries c
 where NOT EXISTS (select * from reg_countries rc where rc.country_id = c.country_id);
 
---Napisz zapytanie, które zwróci wszystkich pracowników niebêd¹cych managerami.
+--Napisz zapytanie, kt˜re zwr˜ci wszystkich pracownik˜w nieb˜d˜cych managerami.
 select *
 from employees e1
 where NOT EXISTS (select * from employees e2 where e1.employee_id = e2.manager_id);
 
---Napisz zapytanie, które zwróci dane pracowników, którzy zarabiaj¹ wiêcej ni¿ œrednie 
---zarobki na stanowisku, na którym pracuj¹
+--Napisz zapytanie, kt˜re zwr˜ci dane pracownik˜w, kt˜rzy zarabiaj˜ wi˜cej ni˜ ˜rednie 
+--zarobki na stanowisku, na kt˜rym pracuj˜
 select *
 from employees e
 where salary > (select avg(salary) from employees e2 where e2.position_id = e.position_id);
 
--- Ä†w 4
+-- Æw 4
 
---Napisz zapytanie, ktÃ³re dla wszystkich pracownikÃ³w posiadajÄ…cych pensjÄ™
---zwrÃ³ci informacjÄ™ o rÃ³Å¼nicy miÄ™dzy ich pensjÄ…, a Å›redniÄ… pensjÄ… pracownikÃ³w.
---RÃ³Å¼nicÄ™ podaj jako zaokrÄ…glonÄ… wartoÅ›Ä‡ bezwzglÄ™dnÄ….
+--Napisz zapytanie, które dla wszystkich pracowników posiadaj¹cych pensjê
+--zwróci informacjê o ró¿nicy miêdzy ich pensj¹, a œredni¹ pensj¹ pracowników.
+--Ró¿nicê podaj jako zaokr¹glon¹ wartoœæ bezwzglêdn¹.
 
 
 select name, surname, ABS(ROUND(salary - (select avg(salary) from employees))) as avg_all_diff_abs
 from employees
 where salary is not null;
 
--- Korzystaj¹c z poprzedniego rozwi¹zania, napisz zapytanie, które zwróci tylko 
---tych pracowników, którzy s¹ kobietami i dla których ró¿nica do wartoœci 
---œredniej jest powy¿ej 1000.
+-- Korzystaj˜c z poprzedniego rozwi˜zania, napisz zapytanie, kt˜re zwr˜ci tylko 
+--tych pracownik˜w, kt˜rzy s˜ kobietami i dla kt˜rych r˜nica do warto˜ci 
+--˜redniej jest powy˜ej 1000.
 select name, surname, ABS(ROUND(salary - (select avg(salary) from employees))) as avg_all_diff_abs
 from employees
 where salary is not null and gender like 'K' and ABS(ROUND(salary - (select avg(salary) from employees))) > 1000;
 
 
---Zmodyfikuj poprzednie zapytanie tak aby obliczyæ liczbe pracowników. 
+--Zmodyfikuj poprzednie zapytanie tak aby obliczy˜ liczbe pracownik˜w. 
 --(skorzystaj z podzapytania)
 
 select count(*) from (select name, surname, ABS(ROUND(salary - (select avg(salary) from employees))) as avg_all_diff_abs
 from employees
 where salary is not null and gender like 'K' and ABS(ROUND(salary - (select avg(salary) from employees))) > 1000);
 
---Napisz zapytanie które zwróci informacje o pracownikach zatrudnionych po 
---zakoñczeniu wszystkich projektów (tabela projects). W wynikach zapytania umieœæ jako 
---kolumnê datê graniczn¹.
+--Napisz zapytanie kt˜re zwr˜ci informacje o pracownikach zatrudnionych po 
+--zako˜czeniu wszystkich projekt˜w (tabela projects). W wynikach zapytania umie˜˜ jako 
+--kolumn˜ dat˜ graniczn˜.
 
 select name, surname, date_employed, (select max(date_end) from projects)
 from employees
 where date_employed > (select max(date_end) from projects);
 
--- Napisz zapytanie które zwróci pracowników którzy uzyskali w 2019 oceny wy¿sze ni¿ 
---œrednia w swoim departamencie. Poka¿ œredni¹ departamentu jako kolumnê. 
+-- Napisz zapytanie kt˜re zwr˜ci pracownik˜w kt˜rzy uzyskali w 2019 oceny wy˜sze ni˜ 
+--˜rednia w swoim departamencie. Poka˜ ˜redni˜ departamentu jako kolumn˜. 
 select e1.name, e1.surname, g.grade, 
 (select avg(g.grade)
 from employees e2
@@ -208,11 +208,11 @@ where eg.period = 2019 and (e1.department_id = e2.department_id)
 
 -- Praca domowa
 
--- Skonstruuj po jednym zapytaniu, które bêdzie zawieraæ w klauzuli WHERE:
---a. podzapytanie zwracaj¹ce tylko jedn¹ wartoœæ;
---b. podzapytanie zwracaj¹ce jeden wiersz danych, ale wiele kolumn;
---c. podzapytanie zwracaj¹ce jedn¹ kolumnê danych;
---d. podzapytanie zwracaj¹ce tabelê danych.
+-- Skonstruuj po jednym zapytaniu, kt˜re b˜dzie zawiera˜ w klauzuli WHERE:
+--a. podzapytanie zwracaj˜ce tylko jedn˜ warto˜˜;
+--b. podzapytanie zwracaj˜ce jeden wiersz danych, ale wiele kolumn;
+--c. podzapytanie zwracaj˜ce jedn˜ kolumn˜ danych;
+--d. podzapytanie zwracaj˜ce tabel˜ danych.
 
 --a.
 
@@ -235,26 +235,26 @@ select *
 from employees
 where (name, gender) in (SELECT name, gender FROM employees ORDER BY salary FETCH NEXT 5 ROWS ONLY);
 
---Napisz zapytanie, które zwróci pracowników bêd¹cych kierownikami zak³adów, o ile ich 
---zarobki s¹ wiêksze ni¿ œrednia zarobków dla wszystkich pracowników
+--Napisz zapytanie, kt˜re zwr˜ci pracownik˜w b˜d˜cych kierownikami zak˜ad˜w, o ile ich 
+--zarobki s˜ wi˜ksze ni˜ ˜rednia zarobk˜w dla wszystkich pracownik˜w
 select *
 from employees e1
 where exists (select * from departments d where d.manager_id = e1.employee_id)
 and e1.salary > (select avg(salary) from employees);
 
--- Zmodyfikuj powy¿sze zapytanie tak, aby wyœwietla³o wszystkich pracowników 
---bêd¹cych kierownikami zak³adów, o ile ich zarobki s¹ wiêksze ni¿ œrednia zarobków na 
---stanowisku które zajmuj¹.
+-- Zmodyfikuj powy˜sze zapytanie tak, aby wy˜wietla˜o wszystkich pracownik˜w 
+--b˜d˜cych kierownikami zak˜ad˜w, o ile ich zarobki s˜ wi˜ksze ni˜ ˜rednia zarobk˜w na 
+--stanowisku kt˜re zajmuj˜.
 select *
 from employees e1
 where exists (select * from departments d where d.manager_id = e1.employee_id)
 and e1.salary > (select avg(salary) from employees e2 where e1.position_id = e2.position_id);
 
---. W których klauzulach polecenia SELECT mo¿emy wykorzystaæ podzapytania 
+--. W kt˜rych klauzulach polecenia SELECT mo˜emy wykorzysta˜ podzapytania 
 --nieskorelowane?
 -- where, from, having, select
 
---. W których klauzulach polecenia SELECT mo¿emy wykorzystaæ podzapytania skorelowane?
+--. W kt˜rych klauzulach polecenia SELECT mo˜emy wykorzysta˜ podzapytania skorelowane?
 -- where, having, select
 
 
